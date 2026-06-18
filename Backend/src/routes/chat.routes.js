@@ -1,10 +1,13 @@
 import express from 'express';
-import { sendMessage, getHistory } from '../controllers/chat.controller.js';
+import { sendMessage, getHistory, generalChat } from '../controllers/chat.controller.js';
 import { authenticateToken } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-// All chat routes are protected
+// --- General Text-Only Chatbot Route ---
+router.post('/general', authenticateToken, generalChat);
+
+// --- Document-specific Chat Routes ---
 router.post('/', authenticateToken, sendMessage);
 router.get('/:documentId', authenticateToken, getHistory);
 
