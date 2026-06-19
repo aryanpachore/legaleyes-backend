@@ -17,7 +17,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.DB_PORT || 25419;
+// 🐛 FIX: Use the web server PORT, not the database port!
+const PORT = process.env.PORT || 10000;
 
 // <-- UPDATED: Relaxed Helmet so localhost:5173 can load PDFs in an iframe
 app.use(helmet({
@@ -53,8 +54,9 @@ const startServer = async () => {
     await sequelize.sync();
     console.log('✅ Database Synced');
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Server is running on http://localhost:${PORT}`);
+    // 🐛 FIX: Added '0.0.0.0' to explicitly bind the server for Render
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server is running on port ${PORT}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
