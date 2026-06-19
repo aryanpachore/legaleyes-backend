@@ -1,7 +1,7 @@
 import Groq from 'groq-sdk';
 
 // Import BOTH models directly now!
-import Document from '../models/document.js'; 
+import Document from '../models/Document.js'; 
 import ChatMessage from '../models/chatMessage.js'; // <-- Check this filename!
 
 const groq = new Groq({
